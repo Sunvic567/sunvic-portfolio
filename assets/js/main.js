@@ -249,3 +249,26 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+ const form = document.getElementById("contact-form");
+  const status = document.getElementById("form-status");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let data = new FormData(form);
+    try {
+      let response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        status.textContent = "✅ Your message has been sent. Thank you!";
+        form.reset();
+      } else {
+        status.textContent = "⚠️ Oops! Something went wrong.";
+      }
+    } catch (error) {
+      status.textContent = "⚠️ Network error. Please try again.";
+    }
+  });
